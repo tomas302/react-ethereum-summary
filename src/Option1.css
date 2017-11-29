@@ -4,7 +4,18 @@
 
 .addressInput {
     height: 25px;
-    width: 23.5%;
+    width: 75%;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.contract_code {
+    padding: 15px;
+    font-size: 20px;
+    margin: 0px;
+    width: 75%;
+    height: 250px;
+    border-radius: 5px;
 }
 
 .details {
@@ -15,7 +26,7 @@
     padding: 50px;
     padding-top: 25px;
     padding-left: 0px;
-    margin-left: -15px;
+    margin-left: 0px;
     margin-right: 0px;
     text-align: center;
 }
@@ -29,6 +40,7 @@
     list-style-type: none;
     padding: 15px;
     margin: 10px;
+    word-wrap: break-word;
 }
 
 .detail_item div {

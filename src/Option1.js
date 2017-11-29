@@ -16,11 +16,6 @@ class AddressField extends Component {
 // Component that does all the detail printing
 class Details extends Component {
 
-    constructor(props) {
-        super(props);
-        this.props = props;
-    }
-
     render() {
         let etherscanLink = 'https://kovan.etherscan.io/address/' + this.props.address;
 
@@ -28,8 +23,8 @@ class Details extends Component {
             ['Address (redirects to etherscan)', <a target="_blank" href={etherscanLink}>{this.props.address}</a>],
             ['Account type', this.props.isContract ? 'Smart Contract' : 'Normal'],
             ['Balance', this.props.balance],
-            ['Transaction count', null],
-            ['<h3>TODO add more</h3>', null],
+            ['Transaction count', this.props.transactionCount],
+            ['Code', this.props.contractCode],
         ]
 
         if (this.props.address === undefined || this.props.address.length !== 42) {
@@ -39,8 +34,17 @@ class Details extends Component {
         let detailElement = [];
 
         for (let i = 0; i < detailList.length; i++) {
-            let data = detailList[i][1] === null ? "WIP" : detailList[i][1];
-            detailElement.push(<li key={i} className='detail_item'><div><b>{detailList[i][0]}:</b></div> {data}</li>);
+            let data;
+            if (i === 4) { // If it's the 'Code' section
+                // Return if is a normal account
+                if (detailList[i][1] === null) break;
+                // or print the contract code if not
+                data = detailList[i][1];
+                detailElement.push(<li key={i} className='detail_item'><div><b>{detailList[i][0]}:</b></div> <textarea value={data} readOnly className="contract_code"></textarea></li>);
+            } else {
+                data = detailList[i][1] === null ? "WIP" : detailList[i][1];
+                detailElement.push(<li key={i} className='detail_item'><div><b>{detailList[i][0]}:</b></div> {data}</li>);
+            }
         }
 
         return (
@@ -67,6 +71,8 @@ export default class Option1 extends Component {
             currentAddress: '0x0000000000000000000000000000000000000000',
             balance: 0,
             isContract: false,
+            contractCode: null,
+            transactionCount: 0,
         };
 
         this.addressChangedCallback = (changed) => {
@@ -105,9 +111,19 @@ export default class Option1 extends Component {
                 .then((code) => {
                     this.setState({
                         isContract: (code !== '0x' ? true : false),
+                        contractCode: (code !== '0x' ? code : null)
+                    });
+                });
+
+            api.eth.getTransactionCount(address)
+                .then((transactions) => {
+                    this.setState({
+                        transactionCount: transactions.toString()
                     });
                 });
         };
+
+        this.refreshAddressData(this.state.currentAddress);
     }
     
     // Just heading and details
@@ -119,6 +135,9 @@ export default class Option1 extends Component {
                     address={this.state.currentAddress}
                     balance={this.state.balance}
                     isContract={this.state.isContract}
+                    contractCode={this.state.contractCode}
+                    transactionCount={this.state.transactionCount}
+
 
                     addressChangedCallback={this.addressChangedCallback}
                 />
