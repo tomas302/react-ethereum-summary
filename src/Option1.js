@@ -26,7 +26,7 @@ class Details extends Component {
         let detailList = [
             ['Address (redirects to etherscan)', <a target="_blank" href={etherscanLink}>{this.props.address}</a>],
             ['Account type', this.props.isContract ? 'Smart Contract' : 'Normal'],
-            ['Balance', this.props.balance],
+            ['Balance', this.props.balance + " ETH"],
             ['Transaction count', this.props.transactionCount],
             ['Code', this.props.contractCode],
         ]
