@@ -37,7 +37,16 @@
 }
 
 .detail_item a {
+    padding: 4px;
     text-decoration: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 102, 255);
+    border-radius: 5px;
+}
+
+.detail_item a:hover {
+    color: white;
+    background-color: rgb(0, 0, 0);
 }
 
 .error {
