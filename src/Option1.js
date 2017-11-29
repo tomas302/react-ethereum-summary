@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Option1.css';
 
+
+// Input component that calls the callback of Option1 class
 class AddressField extends Component {
 
     render() {
@@ -11,6 +13,7 @@ class AddressField extends Component {
 
 }
 
+// Component that does all the detail printing
 class Details extends Component {
 
     constructor(props) {
@@ -56,6 +59,7 @@ class Details extends Component {
     }
 }
 
+// Main class that has all the data of the state
 export default class Option1 extends Component {
     constructor(props) {
         super(props);
@@ -68,9 +72,10 @@ export default class Option1 extends Component {
         this.addressChangedCallback = (changed) => {
             let value = changed.target.value;
             if (value.slice(0, 1).toString() !== '0x') {
-                if (value.length >= 2) {
-                    value = '0x' + value.substring(2, value.length).replace(/([^ABCDEFabcdef0123456789])/g, "");
-                } else if (value.length === 0) {
+                if (value.length >= 2) { 
+                    value = '0x' + value.substring(2, value.length).replace(/([^ABCDEFabcdef0123456789])/g, ""); // Using regex to be sure of that is an hex address
+                    value = value.slice(0, 42);
+                } else if (value.length === 0) { //
                     value = '0x0000000000000000000000000000000000000000';
                 } else {
                     value = '0x' + value.replace(/([^ABCDEFabcdef0123456789])/g, "");
@@ -85,6 +90,8 @@ export default class Option1 extends Component {
             }
         }
 
+
+        // Function that interacts with the API and updates the state
         this.refreshAddressData = (address) => {
             let api = this.props.api;
             api.eth.getBalance(address)
@@ -102,7 +109,8 @@ export default class Option1 extends Component {
                 });
         };
     }
-
+    
+    // Just heading and details
     render() {
         return (
             <div className='main'>
