@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './Option1.css';
+import CookieHelper from './CookieHelper'
 
+
+const zeroAddress = '0x0000000000000000000000000000000000000000';
+const cookieHelper = new CookieHelper();
 
 // Input component that calls the callback of Option1 class
 class AddressField extends Component {
@@ -67,8 +71,12 @@ class Details extends Component {
 export default class Option1 extends Component {
     constructor(props) {
         super(props);
+        let defaultAddress = cookieHelper.readCookie('lastAddress');
+        if (defaultAddress === null) {
+            defaultAddress = zeroAddress;
+        }
         this.state = {
-            currentAddress: '0x0000000000000000000000000000000000000000',
+            currentAddress: defaultAddress,
             balance: 0,
             isContract: false,
             contractCode: null,
@@ -82,7 +90,7 @@ export default class Option1 extends Component {
                     value = '0x' + value.substring(2, value.length).replace(/([^ABCDEFabcdef0123456789])/g, ""); // Using regex to be sure of that is an hex address
                     value = value.slice(0, 42);
                 } else if (value.length === 0) { //
-                    value = '0x0000000000000000000000000000000000000000';
+                    value = zeroAddress;
                 } else {
                     value = '0x' + value.replace(/([^ABCDEFabcdef0123456789])/g, "");
                 }
@@ -91,6 +99,7 @@ export default class Option1 extends Component {
                 currentAddress: value
             })
             changed.target.value = value;
+            cookieHelper.createCookie('lastAddress',value, 50*365);
             if (value.length === 42) {
                 this.refreshAddressData(value);
             }
