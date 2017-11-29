@@ -1,0 +1,46 @@
+.main h2 {
+    padding-left: 15px;
+}
+
+.addressInput {
+    height: 25px;
+    width: 23.5%;
+}
+
+.details {
+    background-color: rgb(209, 203, 203);
+    border-width: 3px;
+    border-color: rgb(7, 161, 250);
+    width: 100%;
+    padding: 50px;
+    padding-top: 25px;
+    padding-left: 0px;
+    margin-left: -15px;
+    margin-right: 0px;
+    text-align: center;
+}
+
+.detail_ul {
+    padding-left: 0px;
+    margin-left: -20px;
+}
+
+.detail_item {
+    list-style-type: none;
+    padding: 15px;
+    margin: 10px;
+}
+
+.detail_item div {
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+
+.detail_item a {
+    text-decoration: none;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
