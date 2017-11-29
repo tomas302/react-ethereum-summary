@@ -14,11 +14,11 @@ function Details(props) {
     '<h3>TODO add more</h3>',
   ];
 
-  let etherscanLink = 'https://etherscan.io/address/' + props.address;
+  let etherscanLink = 'https://kovan.etherscan.io/address/' + props.address;
 
   let detailListData = [
     <a target="_blank" href={etherscanLink}>{props.address}</a>,
-    null,
+    props.isContract ? 'Smart Contract' : 'Normal',
     props.balance,
     null,
     null,
@@ -49,6 +49,7 @@ class Option1 extends Component {
         <Details className='details'
           address={this.props.address}
           balance={this.props.balance}
+          isContract={this.props.isContract}
           />
       </div>
     );
@@ -61,6 +62,7 @@ class App extends Component {
     this.state = {
       currentAddress: '0x0000000000000000000000000000000000000000',
       balance: 0,
+      isContract: false,
     };
 
     api.eth.getBalance(this.state.currentAddress)
@@ -69,6 +71,13 @@ class App extends Component {
           balance: api.util.fromWei(newBalance, "ether").toString()
         });
     });
+
+    api.eth.getCode(this.state.currentAddress)
+    .then((code) => {
+      this.setState({
+        isContract: (code !== '0x' ? true : false),
+      });
+  });
   }
 
 
@@ -78,6 +87,7 @@ class App extends Component {
         <Option1
           address={this.state.currentAddress}
           balance={this.state.balance}
+          isContract={this.state.isContract}
           />
       </div>
     );
