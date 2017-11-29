@@ -12,7 +12,7 @@ function Details(props) {
         <ul>
           <li>Address: {props.address}</li>
           <li>Account type: </li>
-          <li>Balance: </li>
+          <li>Balance: {props.balance}</li>
           <li>Transaction count: </li>
           <li><h3>TODO add more</h3></li>
         </ul>
@@ -25,7 +25,10 @@ class Option1 extends Component {
     return (
       <div>
         <h2>I'm the first option</h2>
-        <Details address={this.props.address}/>
+        <Details
+          address={this.props.address}
+          balance={this.props.balance}
+          />
       </div>
     );
   }
@@ -36,13 +39,25 @@ class App extends Component {
     super(props);
     this.state = {
       currentAddress: '0x0000000000000000000000000000000000000000',
+      balance: 0,
     };
+
+    api.eth.getBalance(this.state.currentAddress)
+      .then((newBalance) => {
+        this.setState({
+          balance: api.util.fromWei(newBalance, "ether").toString()
+        });
+    });
   }
+
 
   render() {
     return (
       <div>
-        <Option1 address={this.state.currentAddress}/>
+        <Option1
+          address={this.state.currentAddress}
+          balance={this.state.balance}
+          />
       </div>
     );
   }
