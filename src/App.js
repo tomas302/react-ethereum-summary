@@ -6,15 +6,36 @@ const provider = new Api.Provider.Http('https://kovan.infura.io/'); // or Api.Pr
 const api = new Api(provider);
 
 function Details(props) {
+  let detailList = [
+    'Address',
+    'Account type',
+    'Balance',
+    'Transaction count',
+    '<h3>TODO add more</h3>',
+  ];
+
+  let etherscanLink = 'https://etherscan.io/address/' + props.address;
+
+  let detailListData = [
+    <a target="_blank" href={etherscanLink}>{props.address}</a>,
+    null,
+    props.balance,
+    null,
+    null,
+  ];
+  
+  let detailElement = [];
+
+  for (let i = 0; i < detailList.length; i++) {
+    let data = detailListData[i] === null ? "WIP" : detailListData[i];
+    detailElement.push(<li key={i} className='detail_item'><div><b>{detailList[i]}:</b></div> {data}</li>);
+  }
+  
   return (
-    <div>
+    <div className='details'>
       <h3>Address Summary</h3>
-        <ul>
-          <li>Address: {props.address}</li>
-          <li>Account type: </li>
-          <li>Balance: {props.balance}</li>
-          <li>Transaction count: </li>
-          <li><h3>TODO add more</h3></li>
+        <ul className='detail_ul'>
+          {detailElement}
         </ul>
     </div>
   );
@@ -25,7 +46,7 @@ class Option1 extends Component {
     return (
       <div>
         <h2>I'm the first option</h2>
-        <Details
+        <Details className='details'
           address={this.props.address}
           balance={this.props.balance}
           />
