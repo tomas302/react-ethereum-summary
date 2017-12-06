@@ -139,7 +139,7 @@ export default class Option1 extends Component {
     render() {
         return (
             <div className='main'>
-                <h2>I'm the first option</h2>
+                <h2>Summary in Kovan testnet</h2>
                 <Details className='details'
                     address={this.state.currentAddress}
                     balance={this.state.balance}
