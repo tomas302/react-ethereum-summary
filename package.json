@@ -16,5 +16,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://thomasdornell.com/react-ethereum-summary"
+  "homepage": "https://tomas302.github.io/react-ethereum-summary"
 }
